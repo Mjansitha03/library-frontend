@@ -1,0 +1,230 @@
+import { Link } from "react-router-dom";
+import heroImage from "../assets/hero-image.png";
+import { FaBell, FaBookmark, FaBookOpen, FaClock } from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa";
+import { useAuth } from "../Context/AuthContext";
+
+const HomePage = () => {
+  const { user } = useAuth(); // login state
+
+  const scrollToHero = () => {
+    document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <>
+      {/* ================= HERO SECTION ================= */}
+      <section
+        id="hero"
+        className="relative text-white"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(29,78,216,0.85), rgba(37,99,235,0.85)),
+            url(${heroImage})
+          `,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6 py-28">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            Smart Library Management <br /> Made Easy
+          </h1>
+
+          <p className="max-w-xl text-lg mb-8">
+            Manage books, borrow seamlessly, reserve instantly, and stay updated
+            with reviews and announcements — all in one platform.
+          </p>
+
+          {/* ACTION BUTTONS */}
+          <div className="flex flex-wrap gap-4">
+            <Link
+              to="/books"
+              className="bg-white text-blue-600 px-6 py-3 rounded font-medium hover:bg-gray-100 transition"
+            >
+              Explore Books →
+            </Link>
+
+            {!user && (
+              <Link
+                to="/sign-up"
+                className="border border-white px-6 py-3 rounded hover:bg-white hover:text-blue-600 transition"
+              >
+                Login / Register
+              </Link>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FEATURES ================= */}
+      <section className="max-w-7xl mx-auto px-6 py-16 bg-gray-50">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl mb-2">Powerful Features</h2>
+          <p className="text-gray-600">
+            Everything you need for efficient library management
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-4">
+          {[
+            {
+              icon: <FaBookOpen size={36} />,
+              bg: "bg-blue-200",
+              color: "text-blue-600",
+              title: "Book Management",
+              desc: "Browse, search, and manage books with availability tracking.",
+            },
+            {
+              icon: <FaClock size={36} />,
+              bg: "bg-green-200",
+              color: "text-green-600",
+              title: "Borrow & Return",
+              desc: "Automated due dates, returns, and late fine calculations.",
+            },
+            {
+              icon: <FaBookmark size={36} />,
+              bg: "bg-purple-200",
+              color: "text-purple-600",
+              title: "Reservations",
+              desc: "Reserve books and get notified when available.",
+            },
+            {
+              icon: <FaBell size={36} />,
+              bg: "bg-yellow-200",
+              color: "text-yellow-600",
+              title: "Smart Notifications",
+              desc: "Real-time alerts for announcements and overdue books.",
+            },
+          ].map((f, i) => (
+            <div
+              key={i}
+              className="p-6 bg-white rounded shadow text-center
+                         hover:-translate-y-2 hover:shadow-xl transition"
+            >
+              <div
+                className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ${f.bg} ${f.color}`}
+              >
+                {f.icon}
+              </div>
+              <h3 className="font-semibold mb-2">{f.title}</h3>
+              <p className="text-sm text-gray-600">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ================= REVIEWS ================= */}
+      <section className="bg-white py-20 max-w-7xl mx-auto px-6">
+        <div className="text-center mb-14">
+          <h2 className="text-4xl mb-4 text-gray-900">What Our Readers Say</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Genuine reviews shared by our library members.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              book: "Harry Potter",
+              review: "An absolutely magical journey!",
+              reviewer: "Reviewer #1",
+              rating: 5,
+            },
+            {
+              book: "To Kill a Mockingbird",
+              review: "A timeless classic everyone should read.",
+              reviewer: "Reviewer #2",
+              rating: 5,
+            },
+            {
+              book: "The Great Gatsby",
+              review: "A brilliant portrayal of the Jazz Age.",
+              reviewer: "Reviewer #3",
+              rating: 4,
+            },
+          ].map((r, i) => (
+            <div key={i} className="bg-gray-50 p-6 rounded-xl border">
+              <div className="flex mb-3">
+                {[...Array(5)].map((_, idx) => (
+                  <span
+                    key={idx}
+                    className={`text-xl ${
+                      idx < r.rating ? "text-yellow-400" : "text-gray-300"
+                    }`}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
+              <p className="text-sm mb-2">
+                <strong>Book:</strong> {r.book}
+              </p>
+              <p className="italic text-gray-600 mb-2">“{r.review}”</p>
+              <p className="text-xs text-gray-500">— {r.reviewer}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* REVIEWS NAV BUTTON */}
+        <div className="text-center mt-10">
+          <Link
+            to="/reviews/all"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            Read All Reviews <FaArrowRight />
+          </Link>
+        </div>
+      </section>
+
+      {/* ================= ANNOUNCEMENTS ================= */}
+      <section className="max-w-7xl mx-auto px-6 py-16 text-center bg-gray-50">
+        <h2 className="text-4xl text-gray-900 mb-4">Library Announcements</h2>
+        <p className="text-gray-600 mb-10">
+          Stay informed about new arrivals and updates.
+        </p>
+
+        <div className="max-w-2xl mx-auto flex gap-4 p-6 bg-blue-50 border-l-4 border-blue-600 rounded-xl text-left">
+          <div className="w-12 h-12 bg-blue-600 text-white rounded-lg flex items-center justify-center">
+            <FaBell />
+          </div>
+          <div>
+            <h3 className="font-semibold">New Books Arrived!</h3>
+            <p className="text-gray-600">
+              Latest programming and fiction books added.
+            </p>
+          </div>
+        </div>
+
+        {/* ANNOUNCEMENTS NAV BUTTON */}
+        <div className="mt-8">
+          <Link
+            to="/announcements"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            View All Announcements <FaArrowRight />
+          </Link>
+        </div>
+      </section>
+
+      {/* ================= CTA (GUEST ONLY) ================= */}
+      {!user && (
+        <section className="bg-gradient-to-b from-blue-500 to-blue-700 py-24 text-center text-white">
+          <h2 className="text-4xl md:text-5xl mb-6">Join LibraryHub Today</h2>
+          <p className="max-w-2xl mx-auto mb-10 text-blue-100">
+            Create your account and enjoy a smarter library experience.
+          </p>
+
+          <button
+            onClick={scrollToHero}
+            className="bg-white text-blue-600 px-8 py-4 rounded-xl inline-flex items-center gap-2 hover:bg-blue-50 transition"
+          >
+            Get Started <FaArrowRight />
+          </button>
+        </section>
+      )}
+    </>
+  );
+};
+
+export default HomePage;
