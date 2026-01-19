@@ -15,7 +15,6 @@ const BookManagement = () => {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
 
-  // 🔍 filters
   const [search, setSearch] = useState("");
   const [genre, setGenre] = useState("");
 
@@ -28,7 +27,6 @@ const BookManagement = () => {
     fetchBooks();
   }, []);
 
-  /* ================= FILTERED BOOKS ================= */
   const filteredBooks = useMemo(() => {
     let data = [...books];
 
@@ -49,21 +47,20 @@ const BookManagement = () => {
     return data;
   }, [books, search, genre]);
 
-  /* ================= PAGINATION ================= */
   const startIndex = (page - 1) * PAGE_LIMIT;
   const paginatedBooks = filteredBooks.slice(
     startIndex,
     startIndex + PAGE_LIMIT
   );
 
-  // reset page on filter change
+
   useEffect(() => {
     setPage(1);
   }, [search, genre]);
 
   return (
     <div className="space-y-6">
-      {/* HEADER */}
+     
       <div className="flex flex-wrap justify-between items-center gap-4">
         <h1 className="text-2xl font-bold">📚 Book Management</h1>
         <button
@@ -78,7 +75,7 @@ const BookManagement = () => {
         <AddBookModal close={() => setOpen(false)} refresh={fetchBooks} />
       )}
 
-      {/* SEARCH */}
+    
       <SearchFilterBooks
         search={search}
         setSearch={setSearch}
@@ -86,7 +83,7 @@ const BookManagement = () => {
         setGenre={setGenre}
       />
 
-      {/* GRID */}
+   
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {paginatedBooks.length ? (
           paginatedBooks.map((b) => (
@@ -99,7 +96,6 @@ const BookManagement = () => {
         )}
       </div>
 
-      {/* PAGINATION */}
       <Pagination
         total={filteredBooks.length}
         page={page}

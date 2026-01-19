@@ -15,7 +15,7 @@ const Announcements = () => {
     const loadAnnouncements = async () => {
       try {
         const res = await getAnnouncements({ signal: controller.signal });
-        setData(res.data); // ✅ already filtered admin announcements
+        setData(res.data); 
       } catch (err) {
         if (err.name !== "CanceledError") {
           console.error("Failed to load announcements", err);

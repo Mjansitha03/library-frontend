@@ -3,7 +3,6 @@ import { NotificationContext } from "./NotificationContext";
 import { useAuth } from "./AuthContext";
 import Api from "../Services/Api";
 
-
 const NotificationProvider = ({ children }) => {
   const { user } = useAuth();
   const [notifications, setNotifications] = useState([]);
@@ -12,9 +11,10 @@ const NotificationProvider = ({ children }) => {
   const fetchNotifications = async () => {
     try {
       const res = await Api.get("/notifications");
-      const data = Array.isArray(res.data) ? res.data : res.data.notifications || [];
+      const data = Array.isArray(res.data)
+        ? res.data
+        : res.data.notifications || [];
 
-      // Map to include title and createdBy for modal overlay
       setNotifications(
         data.map((n) => ({
           _id: n._id,
@@ -23,7 +23,7 @@ const NotificationProvider = ({ children }) => {
           createdBy: n.createdBy || null,
           isRead: n.isRead,
           createdAt: n.createdAt,
-        }))
+        })),
       );
     } catch (err) {
       console.error("Notification fetch failed", err);
@@ -37,7 +37,7 @@ const NotificationProvider = ({ children }) => {
     try {
       await Api.put(`/notifications/${id}`);
       setNotifications((prev) =>
-        prev.map((n) => (n._id === id ? { ...n, isRead: true } : n))
+        prev.map((n) => (n._id === id ? { ...n, isRead: true } : n)),
       );
     } catch (err) {
       console.error("Mark read failed", err);
@@ -51,7 +51,6 @@ const NotificationProvider = ({ children }) => {
       return;
     }
 
-    // Admin doesn't need notifications
     if (user.role === "admin") {
       setNotifications([]);
       setLoading(false);

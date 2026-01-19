@@ -31,7 +31,6 @@ const ReviewModeration = ({ review, refresh }) => {
 
   return (
     <div className="bg-white rounded-2xl border p-5 shadow-sm hover:shadow-md transition flex flex-col h-full">
-      {/* ================= BOOK INFO ================= */}
       <div>
         <h4 className="font-semibold text-gray-900 line-clamp-1">
           {review.book?.title}
@@ -41,10 +40,8 @@ const ReviewModeration = ({ review, refresh }) => {
         </p>
       </div>
 
-      {/* ================= RATING ================= */}
       <RatingStars rating={review.rating} />
 
-      {/* ================= REVIEW TEXT ================= */}
       <p className="text-sm text-gray-700 mt-3 leading-relaxed break-words flex-1">
         {expanded ? review.comment : preview}
         {isLong && (
@@ -57,7 +54,6 @@ const ReviewModeration = ({ review, refresh }) => {
         )}
       </p>
 
-      {/* ================= STATUS ================= */}
       <span
         className={`inline-block mt-4 text-xs font-medium px-3 py-1 rounded-full w-fit
           ${
@@ -70,7 +66,6 @@ const ReviewModeration = ({ review, refresh }) => {
         {review.isApproved ? "Approved" : "Pending Approval"}
       </span>
 
-      {/* ================= ACTIONS ================= */}
       <div className="flex flex-col sm:flex-row gap-3 mt-5">
         {!review.isApproved && (
           <button

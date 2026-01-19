@@ -20,7 +20,6 @@ const ReviewCard = ({ review }) => {
       className="bg-white rounded-2xl border shadow-sm hover:shadow-lg
                  transition p-4 sm:p-5 flex flex-col h-full"
     >
-      {/* BOOK INFO */}
       <div className="mb-3">
         <h3 className="text-base sm:text-lg font-semibold text-gray-900 line-clamp-1">
           {review.book?.title}
@@ -30,7 +29,6 @@ const ReviewCard = ({ review }) => {
         </p>
       </div>
 
-      {/* REVIEW CONTENT */}
       <div className="relative flex-1">
         <FaQuoteLeft className="absolute -top-1 -left-1 text-gray-200 text-xl" />
 
@@ -55,22 +53,18 @@ const ReviewCard = ({ review }) => {
         </AnimatePresence>
       </div>
 
-      {/* FOOTER */}
       <div className="flex items-center justify-between mt-4 pt-4 border-t">
         <div className="flex items-center gap-3 min-w-0">
-          {/* USER AVATAR */}
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-600
                           flex items-center justify-center text-white font-bold uppercase shadow-sm">
             {review.user?.name?.charAt(0)}
           </div>
 
-          {/* USER NAME */}
           <span className="text-sm font-medium text-gray-800 truncate">
             {review.user?.name}
           </span>
         </div>
 
-        {/* RATING */}
         <RatingStars rating={review.rating} />
       </div>
     </motion.div>

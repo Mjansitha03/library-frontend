@@ -7,10 +7,9 @@ const ReturnColumn = ({ title, data, color = "text-gray-800", theme, onConfirm, 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  // Cycle of subtle card background colors
+ 
   const cardColors = ["bg-white", "bg-gray-50", "bg-blue-50", "bg-green-50", "bg-yellow-50"];
 
-  // Filter requests for this column based on column-specific date range
   const filteredData = useMemo(() => {
     return data.filter((r) => {
       const d = new Date(r.createdAt);
@@ -22,14 +21,14 @@ const ReturnColumn = ({ title, data, color = "text-gray-800", theme, onConfirm, 
 
   return (
     <div className="bg-white rounded-2xl p-5 flex flex-col shadow-lg h-[600px] md:h-[650px]">
-      {/* COLUMN HEADER */}
+    
       <h3 className={`text-lg md:text-xl font-semibold mb-4 ${color}`}>
         {title} ({filteredData.length})
       </h3>
 
-      {/* COLUMN FILTER */}
+     
       <div className="flex flex-wrap gap-2 mb-4 items-center">
-        {/* START DATE */}
+      
         <div className="relative w-full sm:w-auto">
           <FaCalendarAlt className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 pointer-events-none" />
           <input
@@ -40,7 +39,6 @@ const ReturnColumn = ({ title, data, color = "text-gray-800", theme, onConfirm, 
           />
         </div>
 
-        {/* END DATE */}
         <div className="relative w-full sm:w-auto">
           <FaCalendarAlt className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 pointer-events-none" />
           <input
@@ -51,7 +49,6 @@ const ReturnColumn = ({ title, data, color = "text-gray-800", theme, onConfirm, 
           />
         </div>
 
-        {/* CLEAR FILTER */}
         {(startDate || endDate) && (
           <button
             onClick={() => {
@@ -65,7 +62,6 @@ const ReturnColumn = ({ title, data, color = "text-gray-800", theme, onConfirm, 
         )}
       </div>
 
-      {/* SCROLLABLE AREA */}
       <div className="flex-1 overflow-y-auto pr-2 space-y-3 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
         {!filteredData.length && (
           <p className="text-center text-sm text-gray-400 mt-10">
@@ -74,12 +70,11 @@ const ReturnColumn = ({ title, data, color = "text-gray-800", theme, onConfirm, 
         )}
 
         {filteredData.map((r, idx) => {
-          // Pick a color from the cardColors array, cycle using modulo
           const bgColor = cardColors[idx % cardColors.length];
 
           return (
             <motion.div
-              key={r._id}
+              key={`${r._id}-${r.status}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.25 }}

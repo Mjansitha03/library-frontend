@@ -3,11 +3,11 @@ import api from "../../Services/Api";
 import ReviewModeration from "../../Components/admin/ReviewModeration";
 import Pagination from "../../Components/Pagination";
 
-const PAGE_LIMIT = 6; // reviews per page
+const PAGE_LIMIT = 6;
 
 const ReviewManagement = () => {
   const [reviews, setReviews] = useState([]);
-  const [tab, setTab] = useState("pending"); // "pending" | "approved"
+  const [tab, setTab] = useState("pending");
   const [page, setPage] = useState(1);
 
   const load = async () => {
@@ -19,21 +19,18 @@ const ReviewManagement = () => {
     load();
   }, []);
 
-  // Filter reviews based on selected tab
   const filteredReviews = useMemo(() => {
     return reviews.filter((r) =>
-      tab === "approved" ? r.isApproved : !r.isApproved
+      tab === "approved" ? r.isApproved : !r.isApproved,
     );
   }, [reviews, tab]);
 
-  // Pagination logic
   const startIndex = (page - 1) * PAGE_LIMIT;
   const paginatedReviews = filteredReviews.slice(
     startIndex,
-    startIndex + PAGE_LIMIT
+    startIndex + PAGE_LIMIT,
   );
 
-  // Reset page when tab changes
   useEffect(() => {
     setPage(1);
   }, [tab]);
@@ -42,7 +39,6 @@ const ReviewManagement = () => {
     <div className="max-w-6xl mx-auto px-4 py-6 space-y-6">
       <h1 className="text-2xl font-bold text-gray-900">Review Moderation</h1>
 
-      {/* TABS */}
       <div className="flex gap-4 mb-5">
         {["pending", "approved"].map((t) => (
           <button
@@ -59,7 +55,6 @@ const ReviewManagement = () => {
         ))}
       </div>
 
-      {/* REVIEWS GRID */}
       {paginatedReviews.length ? (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {paginatedReviews.map((review) => (
@@ -72,7 +67,6 @@ const ReviewManagement = () => {
         </p>
       )}
 
-      {/* PAGINATION */}
       {filteredReviews.length > PAGE_LIMIT && (
         <Pagination
           total={filteredReviews.length}

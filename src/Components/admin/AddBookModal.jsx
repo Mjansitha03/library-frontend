@@ -11,7 +11,7 @@ import {
   FaSave,
   FaTimes,
   FaHashtag,
-  FaCheckCircle,
+  FaCheckCircle, 
 } from "react-icons/fa";
 
 const AddBookModal = ({ close, refresh, bookData }) => {
@@ -32,7 +32,6 @@ const AddBookModal = ({ close, refresh, bookData }) => {
     if (bookData) setForm({ ...bookData });
   }, [bookData]);
 
-  // Auto set available copies when adding new book
   useEffect(() => {
     if (!bookData) {
       setForm((prev) => ({
@@ -95,7 +94,7 @@ const AddBookModal = ({ close, refresh, bookData }) => {
           transition={{ duration: 0.25 }}
           className="bg-white w-full max-w-2xl rounded-2xl shadow-xl flex flex-col max-h-[90vh]"
         >
-          {/* HEADER */}
+
           <div className="p-5 border-b flex justify-between items-center">
             <h2 className="text-lg font-semibold flex items-center gap-2">
               <FaBook className="text-red-600" />
@@ -106,7 +105,6 @@ const AddBookModal = ({ close, refresh, bookData }) => {
             </button>
           </div>
 
-          {/* FORM */}
           <form
             onSubmit={handleSubmit}
             className="flex-1 overflow-y-auto p-6"
@@ -136,7 +134,6 @@ const AddBookModal = ({ close, refresh, bookData }) => {
               ))}
             </div>
 
-            {/* FOOTER */}
             <div className="flex justify-end gap-3 pt-6 mt-6 border-t">
               <button
                 type="button"
@@ -161,5 +158,6 @@ const AddBookModal = ({ close, refresh, bookData }) => {
     </AnimatePresence>
   );
 };
+
 
 export default AddBookModal;

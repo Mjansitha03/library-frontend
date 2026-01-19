@@ -8,9 +8,9 @@ const LibrarianAnnouncements = () => {
         <h2 className="text-xl md:text-2xl font-semibold">
           Announcements
         </h2>
-        <p className="text-sm text-gray-500">
+        {/* <p className="text-sm text-gray-500">
           Publish updates for library users
-        </p>
+        </p> */}
       </div>
 
       <div className="bg-white rounded-xl shadow p-5">

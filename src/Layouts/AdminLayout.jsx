@@ -12,7 +12,6 @@ import { FaChartBar } from "react-icons/fa6";
 import { useAuth } from "../Context/AuthContext";
 import { roleTheme } from "../../Utils/roleTheme";
 
-/* ================= NAV LINKS ================= */
 const links = [
   { to: ".", label: "Overview", icon: <FaHome /> },
   { to: "book-management", label: "Books", icon: <FaBook /> },
@@ -34,7 +33,6 @@ const AdminLayout = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      {/* ================= NAVBAR ================= */}
       <header className="sticky top-0 z-30 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="bg-white rounded-2xl shadow flex items-center justify-between overflow-hidden">
@@ -60,7 +58,6 @@ const AdminLayout = () => {
               ))}
             </nav>
 
-            {/* USER + LOGOUT */}
             <div className="flex items-center gap-4 px-4">
               <div className="hidden sm:flex flex-col text-right leading-tight">
                 <span className="text-sm font-semibold text-gray-700">
@@ -81,7 +78,6 @@ const AdminLayout = () => {
         </div>
       </header>
 
-      {/* ================= CONTENT ================= */}
       <main className="flex-1 overflow-y-auto">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <Outlet />

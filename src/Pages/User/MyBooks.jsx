@@ -1,7 +1,5 @@
-// MyBooks.jsx
 import { useEffect, useState } from "react";
 import { getMyBorrows } from "../../Services/borrowApi";
-import { getMyBorrowRequests } from "../../Services/borrowRequestApi";
 import BookList from "../../Components/user/BookList";
 
 const MyBooks = () => {
@@ -9,11 +7,9 @@ const MyBooks = () => {
   const [pending, setPending] = useState([]);
 
   const load = async () => {
-    const borrows = await getMyBorrows();
-    const requests = await getMyBorrowRequests();
-
-    setActive(borrows.data);
-    setPending(requests.data.filter((r) => r.type === "return"));
+    const res = await getMyBorrows();
+    setActive(res.data.filter((b) => b.status === "borrowed"));
+    setPending(res.data.filter((b) => b.status === "pending-return"));
   };
 
   useEffect(() => {

@@ -16,7 +16,7 @@ const AdminAnnouncementForm = ({ refresh }) => {
       await createAnnouncement({
         title: form.title,
         message: form.message,
-        targetUsers: [], // 🌍 Global
+        targetUsers: [], 
       });
 
       refresh();

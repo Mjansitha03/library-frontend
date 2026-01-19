@@ -1,7 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../../Services/Api";
-import { FaUserPlus, FaEye, FaEyeSlash, FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import {
+  FaUserPlus,
+  FaEye,
+  FaEyeSlash,
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaPhone,
+} from "react-icons/fa";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -9,6 +17,7 @@ const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     password: "",
     role: "user",
   });
@@ -39,13 +48,11 @@ const SignUp = () => {
           <div className="mx-auto w-14 h-14 bg-blue-600 text-white flex items-center justify-center rounded-xl mb-3">
             <FaUserPlus size={20} />
           </div>
-          <h2 className="text-2xl font-bold text-gray-800">
-            Create Account
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-800">Create Account</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
+        
           <div className="relative">
             <FaUser className="absolute left-3 top-3.5 text-gray-400" />
             <input
@@ -58,7 +65,7 @@ const SignUp = () => {
             />
           </div>
 
-          {/* Email */}
+       
           <div className="relative">
             <FaEnvelope className="absolute left-3 top-3.5 text-gray-400" />
             <input
@@ -71,8 +78,22 @@ const SignUp = () => {
               className="w-full border rounded-lg pl-10 pr-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             />
           </div>
+        
+          <div className="relative">
+            <FaPhone className="absolute left-3 top-3.5 text-gray-400" />
+            <input
+              name="phone"
+              type="tel"
+              placeholder="Phone number"
+              required
+              pattern="[6-9]\d{9}"
+              value={formData.phone || ""}
+              onChange={handleChange}
+              className="w-full border rounded-lg pl-10 pr-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
 
-          {/* Password */}
+       
           <div className="relative">
             <FaLock className="absolute left-3 top-3.5 text-gray-400" />
             <input

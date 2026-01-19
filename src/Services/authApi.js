@@ -9,7 +9,8 @@ export const signUp = (data) =>
 export const forgotPassword = (email) =>
   Api.post("/auth/forgot-password", { email });
 
-export const resetPassword = (token, password) =>
-  Api.post(`/auth/reset-password/${token}`, { password });
+export const resetPassword = (id, token, password) =>
+  Api.post(`/auth/reset-password/${id}/${token}`, { password });
+
 
 

@@ -9,7 +9,6 @@ const SearchFilterBooks = ({ search, setSearch, genre, setGenre }) => {
     Api.get("/books").then((res) => setBooks(res.data));
   }, []);
 
-  // No onResults needed, we call setSearch/setGenre in parent
   return (
     <div className="bg-white rounded-xl shadow-sm p-4 sm:p-5">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">

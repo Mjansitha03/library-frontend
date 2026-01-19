@@ -8,7 +8,6 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // 🔁 Restore session on refresh
   useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
@@ -24,7 +23,6 @@ const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  // 🔐 LOGIN
   const login = async (email, password) => {
     const res = await Api.post("/auth/sign-in", { email, password });
 
@@ -37,7 +35,6 @@ const AuthProvider = ({ children }) => {
     return user;
   };
 
-  // 🚪 LOGOUT
   const logout = () => {
     localStorage.clear();
     setUser(null);

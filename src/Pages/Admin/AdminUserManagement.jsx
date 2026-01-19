@@ -18,47 +18,66 @@ const AdminUserManagement = () => {
   const [page, setPage] = useState(1);
   const [roleMenuUser, setRoleMenuUser] = useState(null);
 
+ 
   const fetchUsers = async () => {
-    const res = await getAllUsers();
-    setUsers(res.data);
-    setFilteredUsers(res.data);
+    try {
+      const res = await getAllUsers();
+      setUsers(res.data);
+      setFilteredUsers(res.data);
+    } catch (err) {
+      console.error("Failed to fetch users:", err);
+    }
   };
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
+
   const handleFilter = useCallback((data) => {
     setPage(1);
     setFilteredUsers(data);
   }, []);
 
+
   const start = (page - 1) * PAGE_LIMIT;
   const paginatedUsers = filteredUsers.slice(start, start + PAGE_LIMIT);
 
   const handleRoleChange = async (userId, role) => {
-    await updateUserRole(userId, role);
-    setRoleMenuUser(null);
-    fetchUsers();
+    try {
+      await updateUserRole(userId, role);
+      setRoleMenuUser(null);
+      fetchUsers();
+    } catch (err) {
+      console.error("Failed to update role:", err);
+    }
   };
+
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this user permanently?")) return;
-    await deleteUser(id);
-    fetchUsers();
+    try {
+      await deleteUser(id);
+      fetchUsers();
+    } catch (err) {
+      console.error("Failed to delete user:", err);
+    }
   };
 
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">User Management</h1>
 
+     
       <SearchFilterUsers users={users} onFilter={handleFilter} />
 
+     
       <div className="bg-white rounded-xl shadow overflow-x-auto">
-        <table className="min-w-[900px] w-full text-sm">
+        <table className="min-w-[1000px] w-full text-sm">
           <thead className="bg-gray-50 text-gray-600">
             <tr>
               <th className="px-6 py-3 text-left">User</th>
+              <th className="px-6 py-3 text-left">Phone</th>
               <th className="px-6 py-3 text-left">Role</th>
               <th className="px-6 py-3 text-left">Member Since</th>
               <th className="px-6 py-3 text-left">Activity</th>
@@ -69,6 +88,7 @@ const AdminUserManagement = () => {
           <tbody>
             {paginatedUsers.map((u) => (
               <tr key={u._id} className="border-t hover:bg-gray-50">
+              
                 <td className="px-6 py-4 flex items-center gap-3">
                   <div
                     className={`${theme.bgLight} h-10 w-10 rounded-full flex items-center justify-center font-bold ${theme.text}`}
@@ -80,23 +100,38 @@ const AdminUserManagement = () => {
                     <p className="text-xs text-gray-500">{u.email}</p>
                   </div>
                 </td>
-
+                <td className="px-6 py-4 text-sm text-gray-700">
+                  {u.phone || "N/A"}
+                </td>
+              
                 <td className="px-6 py-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${theme.badge}`}>
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-semibold ${theme.badge}`}
+                  >
                     {u.role}
                   </span>
                 </td>
 
+              
                 <td className="px-6 py-4">
                   {new Date(u.createdAt).toLocaleDateString()}
                 </td>
 
+                
                 <td className="px-6 py-4 text-xs space-y-1">
-                  <p>{u.activity?.borrowed || 0} borrows</p>
-                  <p className="text-green-600">{u.activity?.active || 0} active</p>
-                  <p className="text-red-600">{u.activity?.overdue || 0} overdue</p>
+                  <p>{u.activity?.borrowed || 0} total borrows</p>
+                  <p className="text-green-600">
+                    {u.activity?.active || 0} active
+                  </p>
+                  <p className="text-red-600">
+                    {u.activity?.overdue || 0} overdue
+                  </p>
+                  <p className="text-purple-600">
+                    {u.activity?.reservations || 0} reservations
+                  </p>
                 </td>
 
+                
                 <td className="px-6 py-4 text-center relative">
                   <div className="flex justify-center gap-4">
                     <button
@@ -139,6 +174,7 @@ const AdminUserManagement = () => {
         )}
       </div>
 
+    
       <Pagination
         total={filteredUsers.length}
         page={page}

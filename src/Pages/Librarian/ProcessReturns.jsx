@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { getBorrowRequests, approveReturnRequest } from "../../Services/borrowRequestApi";
+import {
+  getBorrowRequests,
+  approveReturnRequest,
+} from "../../Services/borrowRequestApi";
 import { roleTheme } from "../../../Utils/roleTheme";
 import ReturnColumn from "../../Components/librarian/ReturnColumn";
 
@@ -15,7 +18,12 @@ const ProcessReturns = () => {
   const loadRequests = async () => {
     try {
       const res = await getBorrowRequests();
-      setRequests(res.data.filter((r) => r.type === "return"));
+
+      const returns = res.data
+        .filter((r) => r.type === "return")
+        .map((r) => ({ ...r }));
+
+      setRequests(returns);
     } catch (err) {
       console.error("Failed to load return requests");
     }
@@ -38,7 +46,6 @@ const ProcessReturns = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* HEADER */}
       <div className="flex flex-col md:flex-row md:justify-between gap-4">
         <div>
           <h2 className="text-xl md:text-2xl font-semibold">Return Requests</h2>
@@ -46,7 +53,6 @@ const ProcessReturns = () => {
         </div>
       </div>
 
-      {/* COLUMNS */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ReturnColumn
           title="Pending Returns"

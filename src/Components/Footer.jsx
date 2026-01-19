@@ -5,7 +5,6 @@ const Footer = () => {
     <footer className="bg-slate-900 text-gray-300">
       <div className="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-4 gap-8">
 
-        {/* About */}
         <div>
           <h3 className="text-white font-semibold text-lg mb-3">LibraryHub</h3>
           <p className="text-sm">
@@ -14,7 +13,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Quick Links */}
         <div>
           <h3 className="text-white font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-2 text-sm">
@@ -26,7 +24,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Support */}
+    
         <div>
           <h3 className="text-white font-semibold mb-3">Support</h3>
           <ul className="space-y-2 text-sm">
@@ -37,7 +35,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Contact */}
+   
         <div>
           <h3 className="text-white font-semibold mb-3">Contact Info</h3>
           <p className="text-sm">📍 City Central Library, India</p>

@@ -8,6 +8,8 @@ import ProtectedRoute from "./Routes/ProtectedRoute";
 import HomePage from "./Pages/HomePage";
 import BookPage from "./Pages/BookPage";
 import AllReviews from "./Pages/AllReviews";
+import PageNotFound from "./Pages/PageNotFound";
+
 
 import SignIn from "./Pages/Auth/SignIn";
 import SignUp from "./Pages/Auth/SignUp";
@@ -23,7 +25,7 @@ import AdminUserManagement from "./Pages/Admin/AdminUserManagement";
 import ReviewManagement from "./Pages/Admin/ReviewManagement";
 import AdminAnnouncements from "./Pages/Admin/AdminAnnouncements";
 
-import UserDashboard from "./Pages/User/UserDashboard";
+// import UserDashboard from "./Pages/User/UserDashboard";
 import MyBooks from "./Pages/User/MyBooks";
 import MyReviews from "./Pages/User/MyReviews";
 import Announcements from "./Pages/Announcements";
@@ -35,18 +37,19 @@ import MyReservations from "./Pages/User/MyReservations";
 import BorrowHistory from "./Pages/User/BorrowHistory";
 import ResetPassword from "./Pages/Auth/ResetPassword";
 import AdminAnalytics from "./Pages/Admin/AdminAnalytics";
-import LibrarianOverview from "./Pages/Librarian/LibrarianOverview";
+// import LibrarianOverview from "./Pages/Librarian/LibrarianOverview";
+import LibrarianReservation from "./Pages/Librarian/LibrarianReservation";
+import LibrarianOverdue from "./Pages/Librarian/LibrarianOverdue";
+import MyProfile from "./Pages/User/MyProfile";
 
 const App = () => {
   const location = useLocation();
   const { user } = useAuth();
 
-  /* 🔥 HIDE NAVBAR FOR ADMIN & LIBRARIAN */
   const hideNavbar =
     location.pathname.startsWith("/admin") ||
     location.pathname.startsWith("/librarian");
 
-  /* FOOTER LOGIC (UNCHANGED, BUT SAFE) */
   const showFooterRoutes = ["/", "/books", "/reviews/all", "/announcements"];
   const showFooter =
     showFooterRoutes.includes(location.pathname) &&
@@ -54,7 +57,6 @@ const App = () => {
 
   return (
     <>
-      {/* ✅ Navbar ONLY for public & user pages */}
       {!hideNavbar && <Navbar />}
 
       <Routes>
@@ -74,11 +76,12 @@ const App = () => {
         {/* ================= USER ================= */}
         <Route element={<ProtectedRoute roles={["user"]} />}>
           <Route path="/user" element={<UserLayout />}>
-            <Route index element={<UserDashboard />} />
+            <Route index element={<MyBooks />} />
             <Route path="my-books" element={<MyBooks />} />
             <Route path="reservations" element={<MyReservations />} />
             <Route path="history" element={<BorrowHistory />} />
             <Route path="my-reviews" element={<MyReviews />} />
+            <Route path="/user/my-profile" element={<MyProfile />} />
           </Route>
         </Route>
 
@@ -90,22 +93,24 @@ const App = () => {
             <Route path="users" element={<AdminUserManagement />} />
             <Route path="reviews" element={<ReviewManagement />} />
             <Route path="announcements" element={<AdminAnnouncements />} />
-            <Route path="analytics" element={<AdminAnalytics/>}/>
+            <Route path="analytics" element={<AdminAnalytics />} />
           </Route>
         </Route>
 
         {/* ================= LIBRARIAN ================= */}
         <Route element={<ProtectedRoute roles={["librarian"]} />}>
           <Route path="/librarian" element={<LibrarianLayout />}>
-            <Route index element={<CheckoutBooks/>}/>
+            <Route index element={<CheckoutBooks />} />
             <Route path="borrow-request" element={<BorrowRequests />} />
             <Route path="returns" element={<ProcessReturns />} />
             <Route path="announcements" element={<LibrarianAnnouncements />} />
+            <Route path="reservations" element={<LibrarianReservation />} />
+            <Route path="overdue" element={<LibrarianOverdue />} />
           </Route>
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
 
-      {/* ✅ Footer only for public/user pages */}
       {showFooter && <Footer />}
     </>
   );

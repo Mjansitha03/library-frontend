@@ -9,7 +9,6 @@ const Pagination = ({ total, page, setPage, limit = 10 }) => {
     setPage(p);
   };
 
-  // 🔹 Dynamic window size based on total pages
   const getVisiblePages = () => {
     const maxVisible = totalPages <= 3 ? totalPages : 3;
     let start = Math.max(page - Math.floor(maxVisible / 2), 1);
@@ -20,15 +19,11 @@ const Pagination = ({ total, page, setPage, limit = 10 }) => {
       start = Math.max(end - maxVisible + 1, 1);
     }
 
-    return Array.from(
-      { length: end - start + 1 },
-      (_, i) => start + i
-    );
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   };
 
   return (
     <div className="flex items-center justify-center gap-2 mt-8 flex-wrap">
-      {/* Prev */}
       <button
         onClick={() => goToPage(page - 1)}
         disabled={page === 1}
@@ -40,7 +35,6 @@ const Pagination = ({ total, page, setPage, limit = 10 }) => {
         Prev
       </button>
 
-      {/* Page Numbers */}
       {getVisiblePages().map((p) => (
         <button
           key={p}
@@ -57,7 +51,6 @@ const Pagination = ({ total, page, setPage, limit = 10 }) => {
         </button>
       ))}
 
-      {/* Next */}
       <button
         onClick={() => goToPage(page + 1)}
         disabled={page === totalPages}

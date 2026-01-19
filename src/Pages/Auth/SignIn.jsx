@@ -45,7 +45,7 @@ const SignIn = () => {
           Welcome Back 👋
         </h2>
 
-        {/* Email */}
+       
         <div className="relative mb-4">
           <FaEnvelope className="absolute left-3 top-3.5 text-gray-400" />
           <input
@@ -58,7 +58,7 @@ const SignIn = () => {
           />
         </div>
 
-        {/* Password */}
+       
         <div className="relative mb-5">
           <FaLock className="absolute left-3 top-3.5 text-gray-400" />
           <input

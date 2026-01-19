@@ -24,9 +24,7 @@ const MyReviewCard = ({ review, onDelete }) => {
         h-full
       "
     >
-      {/* ================= CONTENT ================= */}
       <div className="flex-1">
-        {/* BOOK INFO */}
         <h3 className="text-base sm:text-lg font-semibold text-gray-900 line-clamp-2">
           {review.book?.title}
         </h3>
@@ -35,12 +33,10 @@ const MyReviewCard = ({ review, onDelete }) => {
           by {review.book?.author}
         </p>
 
-        {/* RATING */}
         <div className="mb-3">
           <RatingStars rating={review.rating} />
         </div>
 
-        {/* REVIEW TEXT */}
         <p className="text-gray-700 text-sm leading-relaxed break-words">
           {text}
           {isLong && (
@@ -54,7 +50,6 @@ const MyReviewCard = ({ review, onDelete }) => {
         </p>
       </div>
 
-      {/* ================= ACTIONS ================= */}
       <div className="mt-4 pt-3 border-t flex justify-end">
         <button
           onClick={() => onDelete(review._id)}

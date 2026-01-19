@@ -1,22 +1,25 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
-  FaHome,
   FaBook,
   FaCheckCircle,
   FaBookReader,
   FaBullhorn,
+  FaCalendarCheck,
+  FaClock,
   FaSignOutAlt,
 } from "react-icons/fa";
 
 import { useAuth } from "../Context/AuthContext";
 import { roleTheme } from "../../Utils/roleTheme";
+import { label } from "framer-motion/client";
 
-/* ================= NAV LINKS ================= */
 const navLinks = [
   { to: "", label: "Checkout", icon: <FaBook /> },
   { to: "returns", label: "Returns", icon: <FaCheckCircle /> },
   { to: "borrow-request", label: "Requests", icon: <FaBookReader /> },
   { to: "announcements", label: "Announcements", icon: <FaBullhorn /> },
+  { to: "reservations", label: "Reservations", icon: <FaCalendarCheck /> },
+  { to: "overdue", label: "Overdue", icon: <FaClock /> },
 ];
 
 const LibrarianLayout = () => {
@@ -31,12 +34,9 @@ const LibrarianLayout = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      {/* ================= NAVBAR ================= */}
       <header className="sticky top-0 z-30 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="bg-white rounded-2xl shadow flex items-center justify-between">
-            
-            {/* ================= NAV LINKS ================= */}
             <nav className="flex overflow-x-auto scrollbar-hide">
               {navLinks.map((link) => (
                 <NavLink
@@ -58,7 +58,6 @@ const LibrarianLayout = () => {
               ))}
             </nav>
 
-            {/* ================= USER INFO ================= */}
             <div className="flex items-center gap-4 px-4">
               <div className="hidden sm:flex flex-col text-right leading-tight">
                 <span className="text-sm font-semibold text-gray-700">
@@ -79,7 +78,6 @@ const LibrarianLayout = () => {
         </div>
       </header>
 
-      {/* ================= PAGE CONTENT ================= */}
       <main className="flex-1 overflow-y-auto">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <Outlet />

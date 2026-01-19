@@ -3,11 +3,22 @@ import { motion } from "framer-motion";
 const ReturnRequestCard = ({ request, theme, onConfirm, loadingId }) => {
   const r = request;
 
-  // Dynamic status styles
   const statusConfig = {
-    pending: { bg: "bg-yellow-50", border: "border-yellow-400", badge: "bg-yellow-200 text-yellow-800" },
-    completed: { bg: "bg-green-50", border: "border-green-500", badge: "bg-green-200 text-green-800" },
-    rejected: { bg: "bg-red-50", border: "border-red-500", badge: "bg-red-200 text-red-800" },
+    pending: {
+      bg: "bg-yellow-50",
+      border: "border-yellow-400",
+      badge: "bg-yellow-200 text-yellow-800",
+    },
+    completed: {
+      bg: "bg-green-50",
+      border: "border-green-500",
+      badge: "bg-green-200 text-green-800",
+    },
+    rejected: {
+      bg: "bg-red-50",
+      border: "border-red-500",
+      badge: "bg-red-200 text-red-800",
+    },
   };
   const currentStatus = statusConfig[r.status] || statusConfig.pending;
 
@@ -18,14 +29,12 @@ const ReturnRequestCard = ({ request, theme, onConfirm, loadingId }) => {
       transition={{ duration: 0.25 }}
       className={`flex flex-col sm:flex-row gap-4 items-center p-4 rounded-xl shadow-sm hover:shadow-md transition border-l-4 ${currentStatus.border} ${currentStatus.bg}`}
     >
-      {/* Book Image */}
       <img
-        src={r.book?.image || "https://via.placeholder.com/80"}
+        src={r.book?.image}
         alt={r.book?.title}
         className="w-20 h-28 object-cover rounded"
       />
 
-      {/* Info */}
       <div className="flex-1 space-y-1 text-center sm:text-left">
         <h4 className="font-semibold truncate">{r.book?.title}</h4>
 
@@ -43,19 +52,21 @@ const ReturnRequestCard = ({ request, theme, onConfirm, loadingId }) => {
           </p>
         )}
 
-        {/* Status Badge */}
-        <span className={`inline-block px-2 py-1 text-xs font-medium rounded ${currentStatus.badge} w-fit`}>
+        <span
+          className={`inline-block px-2 py-1 text-xs font-medium rounded ${currentStatus.badge} w-fit`}
+        >
           {r.status.toUpperCase()}
         </span>
       </div>
 
-      {/* Action Button */}
       {r.status === "pending" ? (
         <button
           disabled={loadingId === r._id}
           onClick={() => onConfirm(r._id)}
           className={`px-4 py-2 rounded-lg text-white text-sm w-full sm:w-auto mt-2 sm:mt-0 ${
-            loadingId === r._id ? "bg-gray-400 cursor-not-allowed" : theme.button
+            loadingId === r._id
+              ? "bg-gray-400 cursor-not-allowed"
+              : theme.button
           }`}
         >
           {loadingId === r._id ? "Processing..." : "Confirm"}

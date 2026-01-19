@@ -37,7 +37,7 @@ const SearchFilterUsers = ({ users, onFilter }) => {
 
   return (
     <div className="flex flex-col md:flex-row gap-4 items-center bg-white p-4 rounded-xl shadow-sm">
-      {/* Search */}
+
       <div className="relative w-full md:w-3/4">
         <FaSearch className="absolute left-3 top-3 text-gray-400" />
         <input
@@ -49,7 +49,6 @@ const SearchFilterUsers = ({ users, onFilter }) => {
         />
       </div>
 
-      {/* Role Filter */}
       <div className="relative w-full md:w-1/4">
         <FaUserTag className="absolute left-3 top-3 text-gray-400" />
         <select

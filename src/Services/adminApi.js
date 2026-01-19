@@ -1,21 +1,18 @@
 import Api from "./Api";
 
-/* ================= ADMIN STATS ================= */
 export const fetchAdminStats = async () => {
   const res = await Api.get("/admin/stats");
-  return res.data; // ✅ FIX: return data only
+  return res.data;
 };
 
-/* ================= ADMIN ANALYTICS ================= */
 export const fetchAdminAnalytics = async () => {
   const res = await Api.get("/admin/analytics");
-  return res.data; // ✅ FIX
+  return res.data;
 };
 
-/* ================= RECENT ACTIVITY ================= */
 export const fetchRecentActivity = async (page = 1, limit = 5) => {
   const res = await Api.get(
-    `/admin/recent-activity?page=${page}&limit=${limit}`
+    `/admin/recent-activity?page=${page}&limit=${limit}`,
   );
-  return res.data; // ✅ FIX
+  return res.data;
 };

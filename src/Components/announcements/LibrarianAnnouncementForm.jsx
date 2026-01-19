@@ -7,7 +7,7 @@ const LibrarianAnnouncementForm = ({ refresh }) => {
   const theme = roleTheme.librarian;
 
   const [users, setUsers] = useState([]);
-  const [showUsers, setShowUsers] = useState(false); // 👈 toggle
+  const [showUsers, setShowUsers] = useState(false);
   const [form, setForm] = useState({
     title: "",
     message: "",
@@ -54,8 +54,6 @@ const LibrarianAnnouncementForm = ({ refresh }) => {
       onSubmit={submit}
       className={`${theme.bg} rounded-xl shadow p-6 space-y-6`}
     >
-
-      {/* TITLE */}
       <input
         className={`border rounded-lg px-4 py-2 w-full focus:ring-2 ring-${theme.ring}`}
         placeholder="Announcement title"
@@ -64,7 +62,6 @@ const LibrarianAnnouncementForm = ({ refresh }) => {
         required
       />
 
-      {/* MESSAGE */}
       <textarea
         rows={4}
         className={`border rounded-lg px-4 py-2 w-full resize-none focus:ring-2 ring-${theme.ring}`}
@@ -74,7 +71,6 @@ const LibrarianAnnouncementForm = ({ refresh }) => {
         required
       />
 
-      {/* SELECT USERS TOGGLE */}
       <div>
         <button
           type="button"
@@ -88,7 +84,6 @@ const LibrarianAnnouncementForm = ({ refresh }) => {
           {showUsers ? "Hide User Selection" : "Select Target Users"}
         </button>
 
-        {/* SELECT USERS PANEL */}
         {showUsers && (
           <div className="mt-4">
             <label className="text-sm font-medium text-gray-600 mb-1 block">
@@ -103,7 +98,7 @@ const LibrarianAnnouncementForm = ({ refresh }) => {
                 setForm({
                   ...form,
                   targetUsers: [...e.target.selectedOptions].map(
-                    (o) => o.value
+                    (o) => o.value,
                   ),
                 })
               }
@@ -122,13 +117,10 @@ const LibrarianAnnouncementForm = ({ refresh }) => {
         )}
       </div>
 
-      {/* FOOTER */}
       <div className="flex justify-between items-center pt-4">
         <p className="text-sm text-gray-500">
           Selected Users:{" "}
-          <span className="font-medium">
-            {form.targetUsers.length || 0}
-          </span>
+          <span className="font-medium">{form.targetUsers.length || 0}</span>
         </p>
 
         <button

@@ -12,7 +12,6 @@ const Navbar = () => {
   const role = user?.role ?? "guest";
   const theme = roleTheme[role];
 
-  /* 🚫 Hide Navbar for Admin & Librarian */
   if (role === "admin" || role === "librarian") return null;
 
   const [open, setOpen] = useState(false);
@@ -46,7 +45,6 @@ const Navbar = () => {
   return (
     <nav className={`${theme.bg} shadow sticky top-0 z-50`}>
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        {/* LOGO */}
         <Link to="/" className="flex items-center gap-3">
           <div className={`${theme.badge} p-2 rounded`}>📘</div>
           <div>
@@ -55,7 +53,6 @@ const Navbar = () => {
           </div>
         </Link>
 
-        {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-6">
           <CommonLinks />
           {role === "guest" ? (
@@ -85,7 +82,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* MOBILE MENU */}
         <div className="md:hidden flex items-center gap-3">
           {role === "user" && <NotificationBell />}
           {role === "user" && (
@@ -123,7 +119,6 @@ const Navbar = () => {
   );
 };
 
-/* ================= PROFILE DROPDOWN ================= */
 const ProfileDropdown = ({
   user,
   logout,
@@ -151,8 +146,9 @@ const ProfileDropdown = ({
         <div className="px-4 py-3 bg-gray-50">
           <p className="font-semibold text-sm">{user.name}</p>
           <p className="text-xs text-gray-500">{user.email}</p>
-          <p className="font-semibold text-blue-600 mt-2">
-            <NavItem to="/user">My Profile</NavItem>
+          <p className="font-medium text-blue-600 mt-2">
+            <NavItem to="/user/my-profile">My Profile</NavItem>
+            <NavItem to="/user">My DashBoard</NavItem>
           </p>
         </div>
 
@@ -167,7 +163,6 @@ const ProfileDropdown = ({
   </div>
 );
 
-/* ================= NAV ITEM ================= */
 const NavItem = ({ to, children }) => (
   <NavLink
     to={to}

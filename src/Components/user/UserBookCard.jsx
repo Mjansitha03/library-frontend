@@ -6,16 +6,19 @@ import { reserveBook } from "../../Services/reservationApi";
 
 const UserBookCard = ({ book, refreshBooks }) => {
   const [loading, setLoading] = useState(false);
-  const [reserved, setReserved] = useState(false);
+  const [reserved, setReserved] = useState(book.reservedByUser || false);
   const [requested, setRequested] = useState(book.requestedByUser || false);
 
   useEffect(() => {
-    // Sync requested state from backend data
     setRequested(book.requestedByUser || false);
-  }, [book.requestedByUser]);
+    setReserved(book.reservedByUser || false);
+  }, [book]);
 
   const canBorrow =
-    book.availableCopies > 0 && !book.borrowedByUser && !requested && !loading;
+    !loading &&
+    !requested &&
+    !book.borrowedByUser &&
+    (book.availableCopies > 0 || book.reservationStatus === "notified");
 
   const handleBorrow = async () => {
     if (!canBorrow) return;
@@ -23,22 +26,13 @@ const UserBookCard = ({ book, refreshBooks }) => {
     try {
       setLoading(true);
       const res = await requestBorrow(book._id);
+      alert(res.data.message || "Borrow request sent");
 
-      if (res.status === 200 || res.status === 201) {
-        setRequested(true); // Lock button for this user
-        alert(res.data.message || "Borrow request sent successfully");
-
-        // Refresh books to persist state after success
-        if (typeof refreshBooks === "function") {
-          refreshBooks();
-        }
-      } else {
-        throw new Error(res.data?.message || "Borrow request failed");
+      if (typeof refreshBooks === "function") {
+        refreshBooks();
       }
     } catch (err) {
-      alert(
-        err?.response?.data?.message || err.message || "Borrow request failed"
-      );
+      alert(err?.response?.data?.message || "Borrow failed");
     } finally {
       setLoading(false);
     }
@@ -52,6 +46,10 @@ const UserBookCard = ({ book, refreshBooks }) => {
       await reserveBook(book._id);
       setReserved(true);
       alert("Book reserved successfully");
+
+      if (typeof refreshBooks === "function") {
+        refreshBooks();
+      }
     } catch (err) {
       alert(err?.response?.data?.message || "Reservation failed");
     } finally {
@@ -71,38 +69,38 @@ const UserBookCard = ({ book, refreshBooks }) => {
         <div>
           <h3 className="font-semibold text-lg">{book.title}</h3>
           <p className="text-sm text-gray-600">{book.author}</p>
-
           <RatingStars rating={book.averageRating || 0} />
-
           <p className="text-sm mt-2">
             Available: <b>{book.availableCopies}</b>
           </p>
         </div>
 
-        {/* Borrow Button */}
         <button
           disabled={!canBorrow}
           onClick={handleBorrow}
-          className="mt-3 py-2 rounded bg-blue-600 text-white disabled:bg-gray-400"
+          className={`mt-3 py-2 rounded text-white ${
+            canBorrow
+              ? "bg-blue-600 hover:bg-blue-700"
+              : "bg-gray-400 cursor-not-allowed"
+          }`}
         >
-          {loading
-            ? "Processing..."
-            : book.borrowedByUser
-            ? "Borrowed"
-            : requested
+          {requested
             ? "Requested"
+            : book.reservationStatus === "notified"
+            ? "Borrow (Reserved)"
+            : book.availableCopies === 0
+            ? "Unavailable"
             : "Borrow"}
         </button>
 
-        {/* Reserve Button */}
         {book.availableCopies === 0 && !book.borrowedByUser && !requested && (
           <button
-            disabled={loading || reserved}
+            disabled={reserved || loading}
             onClick={handleReserve}
             className="mt-2 py-2 rounded bg-yellow-500 text-white flex items-center justify-center gap-2 disabled:bg-gray-400"
           >
             <FaBookmark />
-            {reserved ? "Reserved (24h Hold)" : "Reserve"}
+            {reserved ? "Reserved" : "Reserve"}
           </button>
         )}
       </div>
