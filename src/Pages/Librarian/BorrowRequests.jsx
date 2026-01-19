@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { getBorrowRequests, rejectBorrowRequest } from "../../Services/borrowRequestApi";
 import { useNavigate } from "react-router-dom";
 import BorrowRequestColumn from "../../Components/librarian/BorrowRequestColumn";
+import { ImSpinner2 } from "react-icons/im";
 
 const BorrowRequests = () => {
   const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,8 +14,16 @@ const BorrowRequests = () => {
   }, []);
 
   const loadRequests = async () => {
-    const res = await getBorrowRequests();
-    setRequests(res.data.filter((r) => r.type === "borrow"));
+    try {
+      setLoading(true);
+      const res = await getBorrowRequests();
+      setRequests(res.data.filter((r) => r.type === "borrow"));
+    } catch (err) {
+      console.error(err);
+      alert("Failed to load borrow requests");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleApprove = (r) => {
@@ -37,6 +47,14 @@ const BorrowRequests = () => {
       alert("Failed to reject request");
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[300px]">
+        <ImSpinner2 className="animate-spin text-4xl text-blue-600" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4">

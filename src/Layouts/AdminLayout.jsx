@@ -36,7 +36,6 @@ const AdminLayout = () => {
       <header className="sticky top-0 z-30 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="bg-white rounded-2xl shadow flex items-center justify-between overflow-hidden">
-            {/* NAV */}
             <nav className="flex overflow-x-auto scrollbar-hide">
               {links.map((link) => (
                 <NavLink

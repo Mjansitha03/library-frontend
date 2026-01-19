@@ -17,7 +17,7 @@ const BookCard = ({ book, refresh }) => {
   return (
     <div className="bg-white rounded-2xl shadow hover:shadow-xl transition flex flex-col">
       <img
-        src={book.image || "https://via.placeholder.com/300"}
+        src={book.image}
         alt={book.title}
         className="h-48 w-full object-cover rounded-t-2xl"
       />

@@ -13,7 +13,6 @@ const UserLayout = () => {
     <div className="min-h-screen bg-blue-50 flex justify-center">
       <div className="w-full max-w-7xl px-4 py-6 flex flex-col md:flex-row gap-6">
 
-        {/* Sidebar */}
         <aside className="w-full md:w-64 bg-white rounded-xl shadow p-4 h-fit">
           <nav className="space-y-2">
             {links.map((l) => (
@@ -37,7 +36,6 @@ const UserLayout = () => {
           </nav>
         </aside>
 
-        {/* Main Content */}
         <main className="flex-1 bg-white rounded-xl shadow p-4 md:p-6">
           <Outlet />
         </main>

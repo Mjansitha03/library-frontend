@@ -27,14 +27,12 @@ const PageNotFound = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="relative max-w-lg w-full text-center bg-white rounded-2xl shadow-2xl p-8 overflow-hidden"
       >
-        {/* Animated Glow */}
         <motion.div
           animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
           transition={{ repeat: Infinity, duration: 3 }}
           className={`absolute -top-24 -right-24 w-56 h-56 rounded-full bg-${theme.primary}-200 blur-3xl`}
         />
 
-        {/* 404 */}
         <motion.h1
           initial={{ y: -20 }}
           animate={{ y: 0 }}
@@ -52,7 +50,6 @@ const PageNotFound = () => {
           The page you’re looking for doesn’t exist or has been moved.
         </p>
 
-        {/* Buttons */}
         <div className="mt-6 flex justify-center gap-4 flex-wrap">
           <Link
             to={homePath}
@@ -70,7 +67,6 @@ const PageNotFound = () => {
           </button>
         </div>
 
-        {/* Floating Role Badge */}
         <motion.div
           animate={{ y: [0, -6, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
